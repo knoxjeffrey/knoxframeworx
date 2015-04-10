@@ -8,10 +8,6 @@ module Knoxframeworx
   class Application 
     
     def call(env)
-      if  env["PATH_INFO"] == '/'
-        return [200, {'Content-Type' => 'text/html'}, ["The Visual Page?"] ]
-      end
-      
       if env["PATH_INFO"] == '/favicon.ico'
         return [500, { }, [] ]
       end
@@ -22,12 +18,17 @@ module Knoxframeworx
       #In users application PagesController will inherit from Controller class below
       #Instantiates a new PagesController class and invokes the about method
       begin
-        controller_class, action = get_controller_and_action(env)
-        controller = controller_class.new(env)
-        if action == nil
+        if env["PATH_INFO"] == '/'
+          controller = HomeController.new(env)
           response = controller.send('index')
         else
-          response = controller.send(action)
+          controller_class, action = get_controller_and_action(env)
+          controller = controller_class.new(env)
+          if action == nil
+            response = controller.send('index')
+          else
+            response = controller.send(action)
+          end
         end
         [ 200, {'Content-Type' => 'text/html'}, [response] ]
       rescue

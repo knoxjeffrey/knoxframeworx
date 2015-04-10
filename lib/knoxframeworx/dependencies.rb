@@ -3,6 +3,7 @@ class Object
   #eg. the constant PagesController will become:
   #require pages_controller
   #this is a way of autoloading my controller files and then returning the controller class again
+  #rescue and exit when file does not exist
   def self.const_missing(const)
     begin
       require const.to_s.to_snake_case
