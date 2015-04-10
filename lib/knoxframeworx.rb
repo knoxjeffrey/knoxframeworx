@@ -23,9 +23,13 @@ module Knoxframeworx
       #Instantiates a new PagesController class and invokes the about method
       controller_class, action = get_controller_and_action(env)
       controller = controller_class.new(env)
-      response = controller.send(action)
       
-      [ 200, {'Content-Type' => 'text/html'}, [response] ]
+      begin
+        response = controller.send(action)
+        [ 200, {'Content-Type' => 'text/html'}, [response] ]
+      rescue
+        [ 404, {'Content-Type' => 'text/html'}, ["No luck, this doesn't exist!"] ]
+      end
     end
     
   end
