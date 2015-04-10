@@ -21,11 +21,14 @@ module Knoxframeworx
       #action = about
       #In users application PagesController will inherit from Controller class below
       #Instantiates a new PagesController class and invokes the about method
-      controller_class, action = get_controller_and_action(env)
-      controller = controller_class.new(env)
-      
       begin
-        response = controller.send(action)
+        controller_class, action = get_controller_and_action(env)
+        controller = controller_class.new(env)
+        if action == nil
+          response = controller.send('index')
+        else
+          response = controller.send(action)
+        end
         [ 200, {'Content-Type' => 'text/html'}, [response] ]
       rescue
         [ 404, {'Content-Type' => 'text/html'}, ["No luck, this doesn't exist!"] ]
