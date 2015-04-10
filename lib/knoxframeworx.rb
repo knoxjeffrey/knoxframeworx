@@ -2,6 +2,7 @@ require "knoxframeworx/version"
 require "knoxframeworx/dependencies"
 require "knoxframeworx/utils"
 require "knoxframeworx/routing"
+require "knoxframeworx/controller"
 
 module Knoxframeworx
   
@@ -12,11 +13,13 @@ module Knoxframeworx
         return [500, { }, [] ]
       end
       
+      
       #eg takes /pages/about from env["PATH_INFO"] and returns 
       #controller_class = PagesController
       #action = about
       #In users application PagesController will inherit from Controller class below
       #Instantiates a new PagesController class and invokes the about method
+      #Root of application needs to have a HomeController with index action
       begin
         if env["PATH_INFO"] == '/'
           controller = HomeController.new(env)
@@ -36,17 +39,6 @@ module Knoxframeworx
       end
     end
     
-  end
-  
-  class Controller
-    
-    def initialize(env)
-      @env = env
-    end
-    
-    def env
-      @env
-    end
   end
   
 end
