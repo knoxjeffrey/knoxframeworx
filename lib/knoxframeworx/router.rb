@@ -1,6 +1,6 @@
 module Knoxframeworx
   
-  class Application
+  class Router
     
     #eg env["PATH_INFO"] = "/pages/about". Split returns 3 elements - '', 'pages', 'about'
     #empty string assinged to dump variable, pages to controller_name and about to action
