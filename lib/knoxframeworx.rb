@@ -12,12 +12,15 @@ module Knoxframeworx
       
       # Router to determine which controller/action
       
-      controller_name, action_name = Router.map_controller_action_for_path(env["PATH_INFO"])
+      controller_name, action_name = Router.controller_and_action_for_path(env["PATH_INFO"])
 
 
         
       controller = ControllerInitializer.new(controller_name, action_name, env).controller
       return controller.status, controller.headers, controller.body
+    end
+  end
+end
       # # if env["PATH_INFO"] == '/favicon.ico'
 #       #   return [500, { }, [] ]
 #       # end

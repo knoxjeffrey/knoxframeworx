@@ -1,6 +1,17 @@
 module Knoxframeworx
   
+  require 'pry'
+  
   class Router
+    
+    def self.controller_and_action_for_path(path)
+      path            = path[1..-1]
+      results         = path.scan(/(.+)\/?(\d+)?\/?(.+)?/).first
+      controller_name = results[0].to_sym
+      # resource_id     = results[1]
+      action_name     = results[2] || :index
+      return [controller_name, action_name]
+    end
     
     #eg env["PATH_INFO"] = "/pages/about". Split returns 3 elements - '', 'pages', 'about'
     #empty string assinged to dump variable, pages to controller_name and about to action
