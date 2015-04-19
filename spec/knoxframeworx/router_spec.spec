@@ -37,7 +37,7 @@ module Knoxframeworx
       context "when path is invalid" do
     
         subject { Router.controller_and_action_for_path("/users/show") }
-      
+        
         it "returns the controller name as :error" do
           expect(subject.first).to eql(:error)
         end

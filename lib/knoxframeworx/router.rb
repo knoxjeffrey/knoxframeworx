@@ -6,10 +6,20 @@ module Knoxframeworx
     
     def self.controller_and_action_for_path(path)
       path            = path[1..-1]
-      results         = path.scan(/(.+)\/?(\d+)?\/?(.+)?/).first
-      controller_name = results[0].to_sym
-      # resource_id     = results[1]
-      action_name     = results[2] || :index
+      results         = path.scan(/([^\/]+)\/?(\d+)?\/?([^\/]+)?/).first
+      
+      if !!results[1]
+        controller_name = results[0].to_sym
+        action_name     = results[2].to_sym 
+      else
+        if !!results[2]
+          controller_name = :error
+          action_name     = :not_found
+        else
+          controller_name = results[0].to_sym
+          action_name     = :index
+        end
+      end
       return [controller_name, action_name]
     end
     
