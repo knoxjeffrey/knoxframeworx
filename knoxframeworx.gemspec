@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "rack"
   
   spec.add_development_dependency "rspec"
+  
+  spec.add_development_dependency "pry"
 end

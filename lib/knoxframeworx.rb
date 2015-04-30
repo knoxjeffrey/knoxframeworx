@@ -3,6 +3,9 @@ require "knoxframeworx/dependencies"
 require "knoxframeworx/utils"
 require "knoxframeworx/router"
 require "knoxframeworx/controller"
+require "knoxframeworx/errors_controller"
+require "knoxframeworx/controller_initializer"
+
 
 module Knoxframeworx
   
@@ -11,13 +14,10 @@ module Knoxframeworx
     def call(env)
       
       # Router to determine which controller/action
-      
       controller_name, action_name = Router.controller_and_action_for_path(env["PATH_INFO"])
-
-
-        
+      
       controller = ControllerInitializer.new(controller_name, action_name, env).controller
-      return controller.status, controller.headers, controller.body
+      return controller.status, controller.headers, [controller.body]
     end
   end
 end
