@@ -14,7 +14,9 @@ module Knoxframeworx
     def call(env)
       
       # Router to determine which controller/action
-      controller_name, action_name = Router.controller_and_action_for_path(env["PATH_INFO"])
+      path   = env["PATH_INFO"]
+      method = env["REQUEST_METHOD"]
+      controller_name, action_name = Router.controller_and_action_for_path(path, method)
       
       controller = ControllerInitializer.new(controller_name, action_name, env).controller
       return controller.status, controller.headers, [controller.body]
